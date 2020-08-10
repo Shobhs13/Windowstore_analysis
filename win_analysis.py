@@ -27,5 +27,13 @@ df_category=data_set.groupby(['Name','Category','Price']).sum().sort_values("Cat
 print(df_category.head())
 
 #Finding the apps which are not free
-data_notfree=data_set.loc[data_set["Price"]!="Free"]     
+data_notfree=data_set.loc[data_set["Price"]!="Free"]  
+
+#Sort the values by Rating.
+data_set_rating=data_set.groupby(["Rating","Name","Category"]).sum().sort_values(["Rating","Category"], ascending=False)   
+print(data_set_rating)
+
+
+
+
 
