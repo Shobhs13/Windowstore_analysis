@@ -7,6 +7,7 @@ import matplotlib.pyplot as plt
 
 #Reading Dataframe
 data_set=pd.read_csv("msft.csv", encoding="UTF-8")
+data_set=data_set.dropna()
 print(data_set)
 
 print(data_set.columns)
@@ -33,6 +34,18 @@ data_notfree=data_set.loc[data_set["Price"]!="Free"]
 data_set_rating=data_set.groupby(["Rating","Name","Category"]).sum().sort_values(["Rating","Category"], ascending=False)   
 print(data_set_rating)
 
+#Time Series
+time_series=data_set[['Date','Name','Rating', 'Category']]
+time_series['Date'].min(),time_series["Date"].max()
+
+#Sorting the time_series column date wise
+time_series=time_series.sort_values("Date")
+time_series.isnull().sum()
+
+#Grouping by date
+time_series=time_series.groupby('Date')['Rating'].sum().reset_index()
+time_series=time_series.set_index('Date')
+print(time_series.index)
 
 
 
