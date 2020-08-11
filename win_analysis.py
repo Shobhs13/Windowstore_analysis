@@ -19,6 +19,12 @@ print(data_set.describe())
 data_set.rename({'No of people Rated':'People(no.)'}, axis=1, inplace=True)
 print(data_set)
 
+#Printing the datatypes 
+print(data_set.dtypes)
+
+#Changing the value to time series from object type
+data_set["Date"]=pd.to_datetime(data_set['Date'])
+
 #no of reviews day wise
 data_group=data_set.groupby(['Date', 'Rating','People(no.)']).sum().reset_index()
 print(data_group)
@@ -46,6 +52,29 @@ time_series.isnull().sum()
 time_series=time_series.groupby('Date')['Rating'].sum().reset_index()
 time_series=time_series.set_index('Date')
 print(time_series.index)
+
+#working with the data 
+y = time_series['Rating'].resample('MS').mean()
+print(y["2017":])
+y=y.dropna()
+
+#Vizualizing the plooting of graph
+y.plot(figsize=(20,10))
+plt.show()
+
+# time_series Decomposition
+from pylab import rcParams
+rcParams['decomp_figsize']= 18,9
+
+decomposition=sm.tsa.seasonal_decompose(y, model='additive')
+fig = decomposition.plot()
+plt.show() 
+
+
+
+
+
+
 
 
 
