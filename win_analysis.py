@@ -4,6 +4,7 @@ import numpy as np
 import datetime
 import seaborn as sns
 import matplotlib.pyplot as plt
+import plotly.express as px
 
 #Reading Dataframe
 data_set=pd.read_csv("msft.csv", encoding="UTF-8")
@@ -19,11 +20,11 @@ print(data_set.describe())
 data_set.rename({'No of people Rated':'People(no.)'}, axis=1, inplace=True)
 print(data_set)
 
-#Printing the datatypes 
-print(data_set.dtypes)
-
 #Changing the value to time series from object type
 data_set["Date"]=pd.to_datetime(data_set['Date'])
+
+#Printing the datatypes 
+print(data_set.dtypes)
 
 #no of reviews day wise
 data_group=data_set.groupby(['Date', 'Rating','People(no.)']).sum().reset_index()
@@ -58,17 +59,28 @@ y = time_series['Rating'].resample('MS').mean()
 print(y["2017":])
 y=y.dropna()
 
-#Vizualizing the plooting of graph
+#Vizualizing the plotting of graph
 y.plot(figsize=(20,10))
 plt.show()
 
 # time_series Decomposition
-from pylab import rcParams
-rcParams['decomp_figsize']= 18,9
+# from pylab import rcParams
+# rcParams['decomp_figsize']= 18,9
 
-decomposition=sm.tsa.seasonal_decompose(y, model='additive')
-fig = decomposition.plot()
-plt.show() 
+# decomposition=sm.tsa.seasonal_decompose(y, model='additive')
+# fig = decomposition.plot()
+# plt.show() 
+
+#Plotting the Data frames
+rating=data_set["Rating"].iloc[0:10]
+app_name=data_set["Name"].iloc[0:10]
+plt.plot(rating,app_name)
+
+#Plot using plotly
+fig = px.line(data_set, x='Date', y='Rating', title='Rating of the overall data of apps' )
+fig.show()
+
+data_set["Rating"].iloc[0:100].plot()
 
 
 
