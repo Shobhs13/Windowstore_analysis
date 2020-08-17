@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 
 #Reading Dataframe
-data_set=pd.read_csv("msft.csv", encoding="UTF-8")
+data_set=pd.read_csv("msft.csv", index_col="Name", encoding="UTF-8")
 data_set=data_set.dropna()
 print(data_set)
 
@@ -22,6 +22,7 @@ print(data_set)
 
 #Changing the value to time series from object type
 data_set["Date"]=pd.to_datetime(data_set['Date'])
+data_set=data_set.sort_values("Date")
 
 #Printing the datatypes 
 print(data_set.dtypes)
@@ -42,7 +43,7 @@ data_set_rating=data_set.groupby(["Rating","Name","Category"]).sum().sort_values
 print(data_set_rating)
 
 #Time Series
-time_series=data_set[['Date','Name','Rating', 'Category']]
+time_series=data_set[['Date','Rating', 'Category']]
 time_series['Date'].min(),time_series["Date"].max()
 
 #Sorting the time_series column date wise
@@ -72,15 +73,14 @@ plt.show()
 # plt.show() 
 
 #Plotting the Data frames
-rating=data_set["Rating"].iloc[0:10]
-app_name=data_set["Name"].iloc[0:10]
-plt.plot(rating,app_name)
+rating=data_set["Rating"]
+plt.scatter(data_set["Date"],rating)
+plt.show()
 
 #Plot using plotly
 fig = px.line(data_set, x='Date', y='Rating', title='Rating of the overall data of apps' )
 fig.show()
 
-data_set["Rating"].iloc[0:100].plot()
 
 
 

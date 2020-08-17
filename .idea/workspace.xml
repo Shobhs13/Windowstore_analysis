@@ -19,7 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="90694d36-b01c-4317-a929-e563a3d81525" name="Default Changelist" comment="" />
+    <list default="true" id="90694d36-b01c-4317-a929-e563a3d81525" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/win_analysis.py" beforeDir="false" afterPath="$PROJECT_DIR$/win_analysis.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -121,5 +124,9 @@
     </state>
     <state width="1899" height="284" key="GridCell.Tab.0.right/0.0.1536.834/1920.0.1920.1050@1920.0.1920.1050" timestamp="1597091138916" />
     <state width="1515" height="223" key="GridCell.Tab.0.right/0.0.1536.864@0.0.1536.864" timestamp="1596917574693" />
+    <state x="2543" y="227" width="672" height="678" key="search.everywhere.popup" timestamp="1597601557301">
+      <screen x="1920" y="0" width="1920" height="1050" />
+    </state>
+    <state x="2543" y="227" width="672" height="678" key="search.everywhere.popup/0.0.1536.834/1920.0.1920.1050@1920.0.1920.1050" timestamp="1597601557301" />
   </component>
 </project>
