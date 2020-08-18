@@ -81,6 +81,10 @@ plt.show()
 fig = px.line(data_set, x='Date', y='Rating', title='Rating of the overall data of apps' )
 fig.show()
 
+plot= data_set.plot.pie(y='Price', figsize=(5,5))
+
+
+
 
 
 
