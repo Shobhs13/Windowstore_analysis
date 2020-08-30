@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 
 #Reading Dataframe
-data_set=pd.read_csv("msft.csv", index_col="Name", encoding="UTF-8")
+data_set=pd.read_csv("msft.csv", encoding="UTF-8")
 data_set=data_set.dropna()
 print(data_set)
 
@@ -26,21 +26,6 @@ data_set=data_set.sort_values("Date")
 
 #Printing the datatypes 
 print(data_set.dtypes)
-
-#no of reviews day wise
-data_group=data_set.groupby(['Date', 'Rating','People(no.)']).sum().reset_index()
-print(data_group)
-data_group=data_group.sort_values("Date", axis=0, ascending=True)
-
-df_category=data_set.groupby(['Name','Category','Price']).sum().sort_values("Category", ascending=True)
-print(df_category.head())
-
-#Finding the apps which are not free
-data_notfree=data_set.loc[data_set["Price"]!="Free"]  
-
-#Sort the values by Rating.
-data_set_rating=data_set.groupby(["Rating","Name","Category"]).sum().sort_values(["Rating","Category"], ascending=False)   
-print(data_set_rating)
 
 #Time Series
 time_series=data_set[['Date','Rating', 'Category']]
@@ -72,16 +57,27 @@ plt.show()
 # fig = decomposition.plot()
 # plt.show() 
 
-#Plotting the Data frames
-rating=data_set["Rating"]
-plt.scatter(data_set["Date"],rating)
-plt.show()
+#Star Ratings
+data_highstars=data_set.groupby("Rating").agg({'Rating':'count'})
+data_highstars.rename({'Rating':'No. of ratings'},axis=1,inplace=True)
+data_highstars.plot(kind="line")
 
-#Plot using plotly
-fig = px.line(data_set, x='Date', y='Rating', title='Rating of the overall data of apps' )
-fig.show()
+#Star Ratings
+data_highstars=data_set.groupby("Rating").agg({'Rating':'count'})
+data_highstars.rename({'Rating':'No. of ratings'},axis=1,inplace=True)
+data_highstars.plot(kind="bar")
 
-plot= data_set.plot.pie(y='Price', figsize=(5,5))
+#Free and paid 
+free_apps=data_set.groupby("Price").agg(sum).sort_values("Price",ascending=True)
+free_apps.plot(kind="bar",figsize=(20,10))
+
+##As you can see clearly we aren't able to see graph clearly so plotting for only paid 
+paid_apps=free_apps.loc[(free_apps["Rating"]<25) & (free_apps["People(no.)"]<50000)]
+paid_apps.plot(kind="bar", figsize=(20,10))
+
+
+
+
 
 
 
