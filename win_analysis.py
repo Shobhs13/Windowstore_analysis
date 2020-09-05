@@ -98,35 +98,3 @@ cat_tech_paid['Price'] = cat_tech_paid['Price'].str.replace('\₹', '')
 cat_tech_paid.plot("Name","Rating",kind="bar",figsize=(20,10),title="Rating vs Paid Apps")
 cat_tech_paid_rat=cat_tech_paid.groupby("Rating").agg(sum)
 cat_tech_paid_rat.plot(kind="bar",rot=45,color='green',title="No. of people vs Ratings of Developer apps")
-
-#Applying linear regrression
- 
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
