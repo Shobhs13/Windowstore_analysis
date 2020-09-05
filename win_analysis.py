@@ -4,7 +4,6 @@ import numpy as np
 import datetime
 import seaborn as sns
 import matplotlib.pyplot as plt
-import re
 
 #Reading Dataframe
 data_set=pd.read_csv("msft.csv", encoding="UTF-8")
@@ -73,6 +72,7 @@ free_apps.plot(kind="bar",figsize=(20,10))
 
 ##As you can see clearly we aren't able to see graph clearly so plotting for only paid 
 paid_apps=free_apps.loc[(free_apps["Rating"]<25) & (free_apps["People(no.)"]<50000)]
+paid_apps=paid_apps.drop(columns="People(no.)")
 paid_apps.plot(kind="line", figsize=(20,10))
 
 #categorical value
@@ -86,9 +86,28 @@ pai_cat=pai_cat.loc[pai_cat["Price in Rs."]!="Free"]
 pai_cat_val=pai_cat.groupby("Category").agg({"Category":"count"})
 pai_cat_val.plot(kind="bar", rot=45)
 
-pai_cat_vals=pai_cat.groupby("Name")["Price in Rs."].agg(sum)
-# pai_cat_vals["Price"]=pai_cat_vals["Price"].str.replace('\₹', '').astype(float)
-pai_cat_vals.plot(kind="line", rot=45)
+# columns
+print(data_set.columns)
+
+#Category wise the best apps in different domains
+cat_tech_paid=data_set.loc[(data_set["Category"]=="Developer Tools") & (data_set["Price"]!="Free")].sort_values("Rating",ascending=False)
+
+#CLeaning the columns for plotting
+import re
+cat_tech_paid['Price'] = cat_tech_paid['Price'].str.replace('\₹', '')
+cat_tech_paid.plot("Name","Rating",kind="bar",figsize=(20,10),title="Rating vs Paid Apps")
+cat_tech_paid_rat=cat_tech_paid.groupby("Rating").agg(sum)
+cat_tech_paid_rat.plot(kind="bar",rot=45,color='green',title="No. of people vs Ratings of Developer apps")
+
+#Applying linear regrression
+ 
+
+
+
+
+
+
+ 
 
 
 
