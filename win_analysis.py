@@ -4,7 +4,7 @@ import numpy as np
 import datetime
 import seaborn as sns
 import matplotlib.pyplot as plt
-import plotly.express as px
+import re
 
 #Reading Dataframe
 data_set=pd.read_csv("msft.csv", encoding="UTF-8")
@@ -73,7 +73,27 @@ free_apps.plot(kind="bar",figsize=(20,10))
 
 ##As you can see clearly we aren't able to see graph clearly so plotting for only paid 
 paid_apps=free_apps.loc[(free_apps["Rating"]<25) & (free_apps["People(no.)"]<50000)]
-paid_apps.plot(kind="bar", figsize=(20,10))
+paid_apps.plot(kind="line", figsize=(20,10))
+
+#categorical value
+cat_val=data_set.groupby("Category")["Rating"].agg([np.max,np.min,np.mean])
+cat_val.plot(kind="bar", rot=45, figsize=(20,10))
+
+#Getting the paid apps, category values
+pai_cat=data_set[["Name","Category","Price"]].copy()
+pai_cat.rename({'Price':'Price in Rs.'}, axis=1, inplace=True)
+pai_cat=pai_cat.loc[pai_cat["Price in Rs."]!="Free"]
+pai_cat_val=pai_cat.groupby("Category").agg({"Category":"count"})
+pai_cat_val.plot(kind="bar", rot=45)
+
+pai_cat_vals=pai_cat.groupby("Name")["Price in Rs."].agg(sum)
+# pai_cat_vals["Price"]=pai_cat_vals["Price"].str.replace('\₹', '').astype(float)
+pai_cat_vals.plot(kind="line", rot=45)
+
+
+
+
+
 
 
 
