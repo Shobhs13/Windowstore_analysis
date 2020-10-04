@@ -98,3 +98,46 @@ cat_tech_paid['Price'] = cat_tech_paid['Price'].str.replace('\₹', '')
 cat_tech_paid.plot("Name","Rating",kind="bar",figsize=(20,10),title="Rating vs Paid Apps")
 cat_tech_paid_rat=cat_tech_paid.groupby("Rating").agg(sum)
 cat_tech_paid_rat.plot(kind="bar",rot=45,color='green',title="No. of people vs Ratings of Developer apps")
+
+
+print(data_set.isnull().sum().sum())
+
+#Findind the correlation
+corr=data_set.corr()
+plt.figure(figsize=(15,10))
+sns.heatmap(corr,annot=True)
+
+#Linear Regression to find any relationship
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import r2_score
+
+import statsmodels.api as sm
+plt.figure(figsize=(15,10))
+plt.scatter(data_set["People(no.)"],data_set["Rating"],c='black')
+plt.xlabel("Ratings")
+plt.ylabel("No. of People Rated")
+plt.show()
+
+X = data_set['People(no.)'].values.reshape(-1,1)
+y = data_set['Rating'].values.reshape(-1,1)
+reg = LinearRegression()
+reg.fit(X, y)
+
+predictions = reg.predict(X)
+plt.figure(figsize=(16, 8))
+plt.scatter(
+    data_set["People(no.)"],data_set["Rating"],c='black'
+)
+plt.plot(
+    data_set["People(no.)"],data_set["Rating"],
+    c='blue',
+    linewidth=2
+)
+plt.xlabel("Ratings")
+plt.ylabel("No. of People Rated")
+plt.show()
+
+Print("There is no Line that can be drawn, No the model is not linear")
+
+
+
